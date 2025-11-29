@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern SQL Data Warehouse To-Do List (Interactive)</title>
+    <style>
+        /* Dyslexia-Friendly Styling */
+        body {
+            font-family: 'Open Sans', 'Arial', sans-serif; /* Clear, simple font */
+            background-color: #f4f4f9; /* Off-white background for better contrast */
+            color: #333;
+            line-height: 1.6; /* Increased line spacing */
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #1a1a1a;
+            letter-spacing: 0.5px; /* Slightly increased letter spacing */
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        h1 { font-size: 2.2em; }
+        h2 { font-size: 1.8em; }
+        h3 { font-size: 1.4em; color: #0056b3; margin-top: 25px;}
+
+        /* List and Checkbox Styling */
+        ul {
+            list-style: none; /* Remove default list markers */
+            padding-left: 0;
+        }
+        li {
+            background-color: #fff;
+            border-left: 5px solid #007bff; /* Clear visual marker for list items */
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex; /* Use flexbox to align checkbox and text */
+            align-items: flex-start;
+        }
+        .epic-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .task-list {
+            list-style: none; /* Remove default list markers here too */
+            padding-left: 0px; /* Adjust padding for better alignment */
+            margin-top: 5px;
+        }
+        .task-list li {
+            border: none;
+            background-color: transparent;
+            box-shadow: none;
+            padding: 5px 0; /* Increased padding for individual tasks */
+            margin-bottom: 4px;
+            border-left: none;
+            line-height: 1.4;
+            display: flex;
+            align-items: center; /* Center task text with checkbox */
+        }
+        .note {
+            background-color: #ffe0b2;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            border-left: 5px solid #ff9800;
+        }
+
+        /* Checkbox and Task Text Container */
+        .task-content {
+            margin-left: 10px; /* Space between checkbox and text */
+            flex-grow: 1; /* Allow content to fill space */
+        }
+        input[type="checkbox"] {
+            min-width: 20px; /* Ensure checkbox is large and easy to click */
+            min-height: 20px;
+            margin-top: 2px; /* Slight adjustment for alignment */
+        }
+
+        /* **Completion Condition Style** */
+        .completed .task-content {
+            text-decoration: line-through; /* Strikethrough completed task */
+            color: #888; /* Gray out completed task */
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✅ SQL Data Warehouse Project To-Do List</h1>
+    <p>This comprehensive list outlines the steps for building the modern SQL Data Warehouse. **Check the box to mark a task as complete.**</p>
+
+    <h2>I. Project Planning & Design (Initial Epics)</h2>
+
+    <ul id="epic-list-1">
+        <li id="epic-1">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">
+                <span class="epic-title">Epic 1: Requirements Analysis</span>
+                <ul class="task-list">
+                    <li id="task-1-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Analyze and understand the project requirements (Core: Build DW to consolidate sales data, focus on latest data, and generate documentation).</div>
+                    </li>
+                </ul>
+                <div class="note">**Note:** This epic is closed early in the project after analysis is complete.</div>
+            </div>
+        </li>
+
+        <li id="epic-2">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">
+                <span class="epic-title">Epic 2: Designing Data Architecture</span>
+                <ul class="task-list">
+                    <li id="task-2-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Choose Data Management Approach (Decision: Build a Data Warehouse using the **Medallion Architecture**).</div>
+                    </li>
+                    <li id="task-2-2">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Design the layers of the Data Warehouse (Define purpose, load method, rules for Bronze, Silver, Gold).</div>
+                    </li>
+                    <li id="task-2-3">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Draw a Data Architecture Diagram (
+
+[Image of Medallion Data Architecture]
+).</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li id="epic-3">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">
+                <span class="epic-title">Epic 3: Project Initialization</span>
+                <ul class="task-list">
+                    <li id="task-3-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Create detailed project tasks.</div>
+                    </li>
+                    <li id="task-3-2">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Define the Naming Conventions (**Snake Case** for all objects, prefixes like `dw_` and `load_`).</div>
+                    </li>
+                    <li id="task-3-3">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Create Git Repository and structure (Folders for data_sets, documents, scripts, and tests).</div>
+                    </li>
+                    <li id="task-3-4">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Create the `data_warehouse` database and the three schemas: `bronze`, `silver`, and `gold`.</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <h2>II. Building the Core Layers (ETL/ELT Development)</h2>
+
+    <h3>Epic 4: Building the Bronze Layer (Data Ingestion)</h3>
+    <ul id="epic-list-4">
+        <li id="task-4-1">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Analyze the source systems (CRM and ERP CSV files).</div>
+        </li>
+        <li id="task-4-2">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Write **DDL scripts** for Bronze tables (6 tables: `source_system_entity`. Include existence checks).</div>
+        </li>
+        <li id="task-4-3">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Write script for **Data Ingestion** (Full load method: `TRUNCATE TABLE` followed by `BULK INSERT`).</div>
+        </li>
+        <li id="task-4-4">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Perform **Data Validation** (Check data completeness and data type accuracy).</div>
+        </li>
+        <li id="task-4-5">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Create **Stored Procedure** (`load_bronze`).</div>
+        </li>
+        <li id="task-4-6">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Add **Instrumentation** (Messaging, error handling, duration tracking).</div>
+        </li>
+        <li id="task-4-7">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Draw Data Flow Diagram (Source files to Bronze tables).</div>
+        </li>
+        <li id="task-4-8">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Document and Commit work (DDL and Stored Procedure scripts) to Git.</div>
+        </li>
+    </ul>
+
+    <h3>Epic 5: Building the Silver Layer (Clean & Standardized Data)</h3>
+    <ul id="epic-list-5">
+        <li id="task-5-1">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Analyze and explore data in the Bronze layer (Identify quality issues: duplicates, spaces, invalid dates).</div>
+        </li>
+        <li id="task-5-2">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Write **DDL scripts** for Silver tables (Structure is identical to Bronze, but includes `dw_create_date`).</div>
+        </li>
+        <li id="task-5-3">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Write **Data Transformation scripts** (Cleansing, normalization, deriving columns, removing duplicates).</div>
+        </li>
+        <li id="task-5-4">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Insert cleaned data into the Silver layer (Full load: `TRUNCATE` and `INSERT`).</div>
+        </li>
+        <li id="task-5-5">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Validate the Silver data quality (Re-run quality checks).</div>
+        </li>
+        <li id="task-5-6">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Create **Stored Procedure** (`load_silver`) with full instrumentation.</div>
+        </li>
+        <li id="task-5-7">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Extend the Data Flow Diagram (Bronze tables to Silver tables).</div>
+        </li>
+        <li id="task-5-8">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Document and Commit work (DDL, Stored Procedure, and quality check scripts) to Git.</div>
+        </li>
+    </ul>
+
+    <h3>Epic 6: Building the Gold Layer (Business Ready Layer)</h3>
+    <ul id="epic-list-6">
+        <li id="task-6-1">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Analyze Business Objects (Identify **Customer**, **Product**, and **Sales**).</div>
+        </li>
+        <li id="task-6-2">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Code **Dimension Views** (`dim_customer`, `dim_product`).
+                <ul class="task-list">
+                    <li id="task-6-2-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Integrate data from Silver layer.</div>
+                    </li>
+                    <li id="task-6-2-2">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Apply complex business logic.</div>
+                    </li>
+                    <li id="task-6-2-3">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Generate **Surrogate Keys** (e.g., `customer_key`).</div>
+                    </li>
+                    <li id="task-6-2-4">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Rename columns to friendly, business-aligned names.</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li id="task-6-3">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Code **Fact View** (`fact_sales`).
+                <ul class="task-list">
+                    <li id="task-6-3-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Perform **Data Lookup** to replace source keys with Surrogate Keys.</div>
+                    </li>
+                    <li id="task-6-3-2">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Structure columns according to fact table conventions.</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li id="task-6-4">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Create final objects as **Views** (Virtual, no load process required).</div>
+        </li>
+        <li id="task-6-5">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Validate **Data Integrity** (Test joins between Fact and Dimension views).</div>
+        </li>
+        <li id="task-6-6">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Draw **Data Model Diagram** (Star Schema).</div>
+        </li>
+        <li id="task-6-7">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Create a **Data Catalog** (Documentation for business users).</div>
+        </li>
+        <li id="task-6-8">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">Finalize and Commit work (Gold DDL, quality checks, and documentation) to Git.</div>
+        </li>
+    </ul>
+
+    <h2>III. Project Finalization (Completion)</h2>
+
+    <ul id="epic-list-final">
+        <li id="epic-final-1">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">
+                <span class="epic-title">Finalize Git Repository</span>
+                <ul class="task-list">
+                    <li id="task-final-1-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Upload remaining documentation (Data Architecture, Project Overviews) to the `docs` folder.</div>
+                    </li>
+                    <li id="task-final-1-2">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">Update the **Readme** file.</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li id="epic-final-2">
+            <input type="checkbox" onchange="toggleCompletion(this)">
+            <div class="task-content">
+                <span class="epic-title">Completion</span>
+                <ul class="task-list">
+                    <li id="task-final-2-1">
+                        <input type="checkbox" onchange="toggleCompletion(this)">
+                        <div class="task-content">The data warehouse build is finished, enabling reporting and analytics.</div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <script>
+        function toggleCompletion(checkbox) {
+            // Find the closest parent <li> element that represents the whole task/epic unit
+            // This handles nested lists (Epic title tasks and sub-tasks)
+            let listItem = checkbox.closest('li');
+
+            if (checkbox.checked) {
+                // Add the 'completed' class to apply strikethrough/gray color
+                listItem.classList.add('completed');
+            } else {
+                // Remove the 'completed' class
+                listItem.classList.remove('completed');
+            }
+
+            // Optional: If you check an Epic checkbox, check all its sub-tasks
+            if (listItem.classList.contains('epic-title-container') || listItem.querySelector('.epic-title')) {
+                let subTasks = listItem.querySelectorAll('.task-list input[type="checkbox"]');
+                subTasks.forEach(subCheckbox => {
+                    subCheckbox.checked = checkbox.checked;
+                    // Also apply the class to sub-tasks
+                    let subListItem = subCheckbox.closest('li');
+                    if (checkbox.checked) {
+                        subListItem.classList.add('completed');
+                    } else {
+                        subListItem.classList.remove('completed');
+                    }
+                });
+            }
+        }
+
+        // Initialize: Loop through all tasks on load to ensure the style is applied correctly
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                // Apply the completion function on load if any box starts checked (though none do here)
+                // This is mainly for persistent storage later, but good practice.
+                // toggleCompletion(checkbox); // Commented out as we start with all unchecked
+            });
+        });
+    </script>
+
+</body>
+</html>
